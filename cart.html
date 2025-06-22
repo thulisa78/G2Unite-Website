@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cart - G2 Unite</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="shortcut icon" href="./img/gtwo-removebg-preview.png" type="image/x-icon">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .cart-header {
+      border-bottom: 2px solid #ccc;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+    }
+    .cart-item {
+      border-bottom: 1px solid #ddd;
+      padding: 20px 0;
+    }
+    .cart-img {
+      max-width: 100px;
+      border: 1px solid #eee;
+      padding: 5px;
+    }
+    .cart-total {
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+    .btn-checkout {
+      background-color: #dc4633;
+      border: none;
+    }
+    .btn-checkout:hover {
+      background-color: #c13c2b;
+    }
+        .navbar-expand-lg .navbar-nav .nav-link{
+          color: #034684;
+          font-weight: bold;
+        }
+
+ 
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+  <div class="container align-items-center justify-content-between">
+
+    <!-- LOGO -->
+    <a class="navbar-brand" href="index.html">
+      <img src="img/gtwo-removebg-preview.png" alt="G2 Unite" style="height: 90px;">
+    </a>
+
+    <!-- TOGGLER FOR MOBILE -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- NAVIGATION LINKS -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto me-3" style="color: #034684;">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="categories.html">Shop</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Checkout</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- CART BUTTON -->
+    <div class="d-flex align-items-center position-relative">
+      <button id="cart-btn" class="btn position-relative">
+        🛒
+        <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+      </button>
+
+      <!-- Mini Cart Dropdown -->
+      <div id="mini-cart" class="card shadow-sm position-absolute end-0 mt-2" style="width: 320px; display: none; z-index: 1000;">
+        <div class="card-body">
+          <h6 class="card-title mb-3">Cart Summary</h6>
+          <div id="mini-cart-items" class="small mb-2" style="max-height: 200px; overflow-y: auto;"></div>
+          <p class="fw-bold mt-2">Total: <span id="mini-total">R0.00</span></p>
+          <a href="cart.html" class="btn btn-outline-secondary btn-sm w-100 mb-2">View Cart</a>
+          <a href="check-out.html" class="btn btn-checkout text-white w-100 btn-sm">Checkout</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+<!-- CART PAGE -->
+<main class="container mt-5 pt-5">
+  <br/><br/>
+  <h2 class="cart-header" style="color: #034684;">Shopping Cart</h2>
+  <div id="cart-items"></div>
+
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <a href="index.html" class="btn btn-outline-secondary">← Continue Shopping</a>
+    </div>
+    <div class="col-md-6 text-end">
+      <p class="cart-total" id="grand-total">Grand Total: R0.00</p>
+      <a href="check-out.html" class="btn btn-checkout text-white px-4 py-2">Proceed to Checkout</a>
+    </div>
+  </div>
+</main>
+<br/><br/>
+    <!-- Footer Section Begin -->
+    <footer  >
+       
+           
+        <div class="social-links-warp" style="background-color: #d3b679;">
+			
+
+<div class="container text-center pt-5" >
+                <p style="color: white;"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Designed by<a href="https://tulisa-wasa.vercel.app/"> Tulisa Wasa<i class="icon-heart color-danger" aria-hidden="true"></i> 
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+            </div>
+
+<br>
+		</div>
+    </footer>
+<!-- FOOTER --
+<footer class="bg-light py-4 mt-5 text-center">
+  <p class="mb-0">&copy; 2025 G2 Unite. All rights reserved.</p>
+</footer>
+
+<!-- SCRIPT -->
+<script>
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const cartItemsContainer = document.getElementById('cart-items');
+  const grandTotal = document.getElementById('grand-total');
+
+  const miniCart = document.getElementById("mini-cart");
+  const cartBtn = document.getElementById("cart-btn");
+  const cartCount = document.getElementById("cart-count");
+  const miniCartItems = document.getElementById("mini-cart-items");
+  const miniTotal = document.getElementById("mini-total");
+
+  let total = 0;
+
+  // Render cart page items
+  if (cart.length === 0) {
+    cartItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
+  } else {
+    cartItemsContainer.innerHTML = cart.map((item, index) => {
+      const itemTotal = item.qty * item.price;
+      total += itemTotal;
+      return `
+        <div class="row cart-item align-items-center">
+          <div class="col-3 col-md-2">
+            <img src="${item.image || 'https://via.placeholder.com/100'}" alt="${item.title}" class="img-fluid cart-img">
+          </div>
+          <div class="col-9 col-md-4">
+            <h6 class="mb-1">${item.title}</h6>
+            <p class="mb-0 text-muted">Price: R${item.price.toFixed(2)}</p>
+          </div>
+          <div class="col-6 col-md-2 mt-2 mt-md-0">
+            <input type="number" class="form-control qty-input" min="1" value="${item.qty}" data-index="${index}">
+          </div>
+          <div class="col-6 col-md-2 text-end mt-2 mt-md-0">
+            <p class="mb-0">R${itemTotal.toFixed(2)}</p>
+          </div>
+          <div class="col-12 col-md-2 text-end mt-2 mt-md-0">
+            <button class="btn btn-sm btn-danger" onclick="removeItem(${index})">Remove</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  grandTotal.textContent = `Grand Total: R${total.toFixed(2)}`;
+
+  // Handle quantity change
+  document.querySelectorAll('.qty-input').forEach(input => {
+    input.addEventListener('change', (e) => {
+      const index = e.target.getAttribute('data-index');
+      const newQty = parseInt(e.target.value);
+      if (newQty > 0) {
+        cart[index].qty = newQty;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        location.reload();
+      }
+    });
+  });
+
+  function removeItem(index) {
+    cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    location.reload();
+  }
+
+  // Mini Cart Logic
+  cartCount.textContent = cart.reduce((sum, item) => sum + item.qty, 0);
+
+  let miniCartTotal = 0;
+  if (cart.length === 0) {
+    miniCartItems.innerHTML = "<p>Your cart is empty.</p>";
+  } else {
+    miniCartItems.innerHTML = cart.map(item => {
+      const itemTotal = item.qty * item.price;
+      miniCartTotal += itemTotal;
+      return `
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div>
+            <div>${item.title}</div>
+            <small class="text-muted">Qty: ${item.qty}</small>
+          </div>
+          <div>R${itemTotal.toFixed(2)}</div>
+        </div>`;
+    }).join('');
+  }
+  miniTotal.textContent = `R${miniCartTotal.toFixed(2)}`;
+
+  cartBtn.addEventListener("click", () => {
+    miniCart.style.display = miniCart.style.display === "none" ? "block" : "none";
+  });
+
+  document.addEventListener("click", function (e) {
+    if (!cartBtn.contains(e.target) && !miniCart.contains(e.target)) {
+      miniCart.style.display = "none";
+    }
+  });
+</script>
+
+</body>
+</html>
