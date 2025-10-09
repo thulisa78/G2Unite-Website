@@ -13,7 +13,7 @@
 
   <!-- FontAwesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
   <style>
    
     /* Navbar */
@@ -145,7 +145,7 @@
   background-repeat: no-repeat;
   color: white;
   padding: 60px 20px; /* More responsive padding */
-  min-height: 57vh; /* Takes half the viewport height */
+  min-height: 80vh; /* Takes half the viewport height */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -260,6 +260,10 @@
     .footer .social-icons i:hover {
       color: #d1f5f5;
     }
+     .bg-white {
+    --bs-bg-opacity: 1;
+    /* background-color: rgb(255 255 255 / 3%) !important; */
+}
   </style>
 </head>
 <body>
@@ -312,7 +316,6 @@
 
   </div>
 </nav>
-  <br/><br/>  <br/><br/>
 <!-- Add this section right after the navbar in the body -->
 <section class="hero text-center" data-aos="fade-up">
   <br/><br/>
@@ -351,19 +354,73 @@
     .project-section {
       margin-bottom: 4rem;
     }
+     .projects-section {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  }
+
+  /* Floating shapes */
+  .projects-section::before,
+  .projects-section::after {
+    content: "";
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, rgba(211, 182, 105, 0.25), transparent 70%);
+    animation: float 12s infinite ease-in-out;
+    z-index: 0;
+  }
+
+  .projects-section::before {
+    top: -80px;
+    left: -100px;
+  }
+
+  .projects-section::after {
+    bottom: -100px;
+    right: -80px;
+    background: radial-gradient(circle at center, rgba(3, 70, 132, 0.2), transparent 70%);
+    animation-duration: 15s;
+  }
+
+  /* Floating animation */
+  @keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-30px) translateX(20px); }
+  }
+
+  /* Ensure content stays above shapes */
+  .projects-content {
+    position: relative;
+    z-index: 2;
+  }
   </style>
 </head>
 <body>
-  <section class="container text-center py-5">
-    <h2 class="mb-4" style="color: #034684; font-weight: bold;">G2 <strong style="color: #d3b679;">UNITE</strong> PROJECTS</h2>
-    <p class="mx-auto" style="max-width: 990px;">
-      G2 Unite is actively involved in community projects aimed at uplifting the youth, demonstrating a strong commitment to social responsibility and empowerment.
-      By organizing and participating in mentorship programs, educational workshops, and youth development initiatives, G2 Unite creates valuable opportunities 
-      for young people to grow, learn, and realize their potential. The organization partners with local schools, nonprofits, and community leaders to ensure 
-      these efforts are impactful and inclusive. Through these initiatives, G2 Unite not only fosters leadership and life skills among the youth but also 
-      helps build a stronger, more resilient community.
+  <section class="container text-center py-5 projects-section">
+  <div class="projects-content">
+    <!-- Heading -->
+    <h2 class="mb-4 display-5 fw-bold" data-aos="fade-up" data-aos-duration="800">
+      G2 <span style="color:#d3b679;">UNITE</span> <span style="color:#034684;">PROJECTS</span>
+    </h2>
+
+    <!-- Divider line -->
+    <div class="mx-auto mb-4" style="width: 80px; height: 4px; background: linear-gradient(90deg, #d3b679, #034684);" data-aos="zoom-in" data-aos-delay="200"></div>
+
+    <!-- Description -->
+    <p class="mx-auto lead text-muted" style="max-width: 900px; line-height: 1.8;" data-aos="fade-up" data-aos-delay="300">
+      G2 Unite is actively involved in community projects aimed at uplifting the youth, demonstrating a strong commitment 
+      to social responsibility and empowerment. By organizing and participating in mentorship programs, educational workshops, 
+      and youth development initiatives, G2 Unite creates valuable opportunities for young people to grow, learn, and realize their potential. 
+      The organization partners with local schools, nonprofits, and community leaders to ensure these efforts are impactful and inclusive. 
+      Through these initiatives, G2 Unite not only fosters leadership and life skills among the youth but also helps build 
+      a stronger, more resilient community.
     </p>
-  </section>
+  </div>
+</section>
 
   <section class="container py-5">
   <div class="container py-5">
@@ -550,6 +607,9 @@
     });
   });
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
 </body>
 </html>

@@ -2,678 +2,360 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>G2 Unite - Shop </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>G2 Unite Shop</title>
 
-  <!-- Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-<link rel="shortcut icon" href="./img/gtwo-removebg-preview.png" type="image/x-icon">
-
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-
-
-  <!-- FontAwesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
   <style>
-   
-    /* Navbar */
-    
-    .navbar {
-      background: transparent;
-      transition: background-color 0.3s;
+    body { background-color: #f8f9fa; }
+    .navbar-brand { font-weight: bold; color: #034684 !important; }
+
+    /* Product Card */
+    .product-card { 
+      border: 1px solid #ddd; 
+      border-radius: 12px; 
+      padding: 20px; 
+      text-align: center; 
+      background: #fff; 
+      transition: transform .2s; 
+      width: 100%;
     }
-     .navbar {
-      background-color: white;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-    .navbar-nav .nav-link {
-      color: #082f6e;
-      font-weight:bold;
-      margin-right: 15px;
-      /* font-size: medium; */
-      
-    }
-    /* Breadcrumb / page header */
-    .page-header {
-      background-color: #fff;
-      padding: 20px 0;
-      text-align: center;
-      border-bottom: 1px solid #eee;
-      margin-bottom: 30px;
-    }
-    .page-header h1 {
-      font-weight: 700;
-      font-size: 2.2rem;
-      margin-bottom: 5px;
-      color: #c12329;
-    }
-    .page-header p {
-      color: #666;
-      font-size: 1rem;
-      max-width: 600px;
-      margin: 0 auto;
+    .product-card:hover { 
+      transform: translateY(-5px); 
+      box-shadow: 0 8px 24px rgba(0,0,0,.1); 
     }
 
-    /* Product Grid */
-    .product-grid {
-      max-width: 1200px;
-      margin: 0 auto 60px;
-      padding: 0 15px;
+    .product-img { 
+      height:180px;  
+      /* object-fit: cover;  */
+      width: 100%; 
+      border-radius: 8px;
     }
-    .product-card {
-      border: 1px solid #eee;
-      border-radius: 12px;
-      overflow: hidden;
-      background-color: #fff;
-      box-shadow: 0 4px 12px rgb(0 0 0 / 0.05);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
+
+    .product-body { padding: 15px; }
+    .price { font-weight: 700; font-size: 1.1rem; }
+    .rating { color: #f6c84c; font-size: 0.95rem; }
+
+    /* Filter Panel */
+    .filter-panel { 
+      border-right: 1px solid #e9ecef; 
+      padding-right: 8px;
+      padding-left: 0;
     }
-    .product-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 24px rgb(0 0 0 / 0.15);
-    }
-    .product-image {
-      position: relative;
-      overflow: hidden;
-      height: 280px;
-      background-color: #f9f9f9;
+    .sticky-filters { position: sticky; top: 90px; }
+
+    /* Hero Section */
+    .hero { 
+      background-image: url(/img/banner2.jpg);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      padding: 60px 20px;
+      min-height: 85vh;
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-    .product-image img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      transition: transform 0.5s ease;
-    }
-    .product-card:hover .product-image img {
-      transform: scale(1.1);
-    }
-    .product-info {
-      padding: 15px 20px;
-      flex-grow: 1;
-      display: flex;
+      text-align: center;
+      position: relative;
       flex-direction: column;
-      justify-content: space-between;
     }
-    .product-title {
-      font-weight: 600;
-      font-size: 1.1rem;
-      margin-bottom: 8px;
-      color: #222;
-      min-height: 48px; /* To keep cards equal height */
+    .hero .overlay { 
+      position: absolute; 
+      top:0; left:0; 
+      width:100%; height:100%; 
+      background: rgba(0,0,0,0.5); 
+      z-index:1; 
     }
-    .product-price {
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: #c12329;
-      margin-bottom: 12px;
-    }
-    .btn-add-cart {
-      background-color: #c12329;
-      border: none;
-      color: white;
-      font-weight: 600;
-      padding: 10px 0;
-      border-radius: 6px;
-      transition: background-color 0.3s ease;
-    }
-    .btn-add-cart:hover {
-      background-color: #a2191f;
-    }
+    .hero h1 { font-size: 3rem; font-weight: 600; }
+    .hero p { font-size: 1.2rem; }
 
-    /* Footer */
-    footer {
-      background-color: #c12329;
-      color: white;
-      /* padding: 40px 15px; */
-      font-size: 0.9rem;
-    }
-    footer h5 {
-      font-weight: 700;
-      margin-bottom: 15px;
-    }
-    footer p, footer li {
-      margin-bottom: 10px;
-      line-height: 1.5;
-    }
-    footer .social-icons i {
-      font-size: 24px;
-      margin-right: 15px;
-      color: white;
-      cursor: pointer;
-      transition: color 0.3s ease;
-    }
-    footer .social-icons i:hover {
-      color: #f9f9f9;
-    }
+    /* Mini cart */
+    #mini-cart { display: none; position: absolute; right: 0; top: 60px; width: 320px; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 999; }
 
-    /* Responsive */
-    @media (max-width: 767px) {
-      .product-image {
-        height: 220px;
-      }
-      .product-title {
-        min-height: auto;
-      }
+    /* Responsive adjustments */
+    @media (max-width: 1200px) {
+      .product-img { height: 200px; }
     }
-   .hero{
-  background: url('/img/Beige\ Modern\ Painting\ Art\ Etsy\ Banner.png') center/cover no-repeat;
- background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  color: white;
-  padding: 60px 20px; /* More responsive padding */
-  min-height: 57vh; /* Takes half the viewport height */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  flex-direction: column;
- 
-}
-
-.hero-banner .overlay {
- background: rgba(0, 0, 0, 0.647);
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hero-banner h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.hero-banner p {
-  font-size: 1.1rem;
-  opacity: 0.9;
-}
-
-@media (max-width: 768px) {
-  .hero-banner {
-    height: 200px;
-  }
-  .hero-banner h1 {
-    font-size: 1.8rem;
-  }
-  .hero-banner p {
-    font-size: 1rem;
-  }
-}
-
-  /* .hero { 
-  background-image: url(/img/Beige\ Modern\ Painting\ Art\ Etsy\ Banner.png);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  color: white;
-  padding: 60px 20px; /* More responsive padding *
-  min-height: 58vh; /* Takes half the viewport height *
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  flex-direction: column;
-}
-.hero .overlay {
-  position: relative;
-  z-index: 1;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    rgba(0, 0, 0, 0.778),  /* top *
-    rgba(0, 0, 0, 0.936)   /* bottom *
-  );
-  z-index: 1;
-} */
-/* Optional: Tweak for very small devices */
-@media (max-width: 600px) {
-  .hero {
-    padding: 40px 15px;
-    min-height: 40vh;
-  }
-}
-  .cart-header {
-      border-bottom: 2px solid #ccc;
-      margin-bottom: 20px;
-      padding-bottom: 10px;
+    @media (max-width: 992px) {
+      aside.filter-panel { display: none; } /* hide filters on smaller screens */
+      .product-img { height: 180px; }
     }
-    .cart-item {
-      border-bottom: 1px solid #ddd;
-      padding: 20px 0;
+    @media (max-width: 768px) {
+      .product-img { height: 160px; }
+      .product-body { padding: 10px; }
     }
-    .cart-img {
-      max-width: 100px;
-      border: 1px solid #eee;
-      padding: 5px;
-    }
-    .cart-total {
-      font-size: 1.3rem;
-      font-weight: bold;
+    @media (max-width: 576px) {
+      .product-card { padding: 12px; }
+      .product-img { height: 140px; }
+      .price { font-size: 1rem; }
     }
   </style>
 </head>
 <body>
 
 <!-- Navbar -->
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
-  <div class="container align-items-center justify-content-between">
-
-    <!-- LOGO -->
-    <a class="navbar-brand" href="index.html">
-      <img src="img/gtwo-removebg-preview.png" alt="G2 Unite" style="height: 90px;">
-    </a>
-
-    <!-- TOGGLER FOR MOBILE -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="index.html"><img src="img/gtwo-removebg-preview.png" alt="G2 Unite"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
-
-    <!-- NAVIGATION LINKS -->
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto me-3" style="color: #034684;">
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="categories.html">Shop</a></li>
-        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-        <li class="nav-item"><a class="nav-link" href="Project.html">Projects</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+    <div class="collapse navbar-collapse" id="navbarNav" >
+      <ul class="navbar-nav ms-auto me-3">
+        <li class="nav-item"><a class="nav-link" href="index.html" style="color: #034684;font-weight: bold;">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html" style="color: #034684;font-weight: bold;">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="categories.html" style="color: #034684;font-weight: bold;">Shop</a></li>
+        <li class="nav-item"><a class="nav-link" href="gallery.html" style="color: #034684;font-weight: bold;">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="Project.html" style="color: #034684;font-weight: bold;">Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html" style="color: #034684;font-weight: bold;">Contact</a></li>
       </ul>
+      <div class="position-relative">
+        <button class="btn btn-dark btn-sm" id="openCartBtn" style="background-color: #034684;">
+          Cart <span id="cartCount" class="badge bg-danger ms-2">0</span>
+        </button>
+      </div>
+      <div id="mini-cart">
+        <h6>Shopping Cart</h6>
+        <div id="mini-cart-items"></div>
+        <hr>
+        <div class="d-flex justify-content-between">
+          <strong>Total:</strong>
+          <span id="mini-total">R0.00</span>
+        </div>
+        <button class="btn btn-sm btn-primary w-100 mt-2" onclick="showPage('cart')">Go to Cart</button>
+      </div>
     </div>
-
-    <!-- CART BUTTON -->
-    <div class="d-flex align-items-center position-relative">
-      <button id="cart-btn" class="btn position-relative">
-        🛒
-        <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
-      </button>
-
-      <!-- Mini Cart Dropdown -->
-
-
-  <!-- Mini Cart -->
-  <div id="mini-cart" class="card shadow-sm position-absolute end-0 mt-2 me-2" style="width: 320px; display: none; z-index: 1000;">
-    <div class="card-body" style="margin-top: 100%;">
-      <h6 class="card-title mb-3">Cart Summary</h6>
-      <div id="mini-cart-items" class="small mb-2" style="max-height: 200px; overflow-y: auto;"></div>
-      <p class="fw-bold mt-2">Total: <span id="mini-total">R0.00</span></p>
-      <a href="cart.html" class="btn btn-outline-secondary btn-sm w-100 mb-2">View Cart</a>
-      <a href="check-out.html" class="btn btn-checkout text-white w-100 btn-sm" style="background-color: #333;">Checkout</a>
-    </div>
-  </div>
-
-
-    </div>
-
   </div>
 </nav>
-  <br/><br/>  <br/><br/>
-<!-- Add this section right after the navbar in the body -->
-<section class="hero text-center" data-aos="fade-up">
-  <br/><br/>
-  
-</section>
-  <br/><br/>
-<!-- Hero Banner -->
-<section class="hero-banner text-center">
-  <div class="container">
-    <h1 style="color: #034684;">Your <strong style="color:#d3b679;">Shopping</strong> Cart</h1>
-    <p>Review the items you’ve added and proceed to checkout to complete your purchase.</p>
-  </div>
-</section> 
-  <br/><br/>
-<!-- Products Grid -->
-<section class="product-grid container">
-  <div class="row g-4">
 
-    <div class="col-sm-6 col-md-4 col-lg-3">
-      <div class="product-card">
-        <div class="product-image">
-          <img src="img/Cap.png" alt="Youth Empowerment Kit" />
-        </div>
-        <div class="product-info">
-          <div class="product-title">Youth Empowerment Kit</div>
-          <div class="product-price">R499.00</div>
-          <button class="btn btn-add-cart add-to-cart" data-title="Youth Empowerment Kit" data-price="499">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-sm-6 col-md-4 col-lg-3">
-      <div class="product-card">
-        <div class="product-image">
-          <img src="img/ChatGPT Image May 8, 2025, 10_56_07 AM.png" alt="Community Journal" />
-        </div>
-        <div class="product-info">
-          <div class="product-title">Community Journal</div>
-          <div class="product-price">R199.00</div>
-          <button class="btn btn-add-cart add-to-cart" data-title="Community Journal" data-price="199">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-sm-6 col-md-4 col-lg-3">
-      <div class="product-card">
-        <div class="product-image">
-          <img src="img/new.jpg" alt="Skill Development Booklet" />
-        </div>
-        <div class="product-info">
-          <div class="product-title">Skill Development Booklet</div>
-          <div class="product-price">R150.00</div>
-          <button class="btn btn-add-cart add-to-cart" data-title="Skill Development Booklet" data-price="150">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-sm-6 col-md-4 col-lg-3">
-      <div class="product-card">
-        <div class="product-image">
-          <img src="img/bean.png" alt="Leadership Training Guide" />
-        </div>
-        <div class="product-info">
-          <div class="product-title">Leadership Training Guide</div>
-          <div class="product-price">R350.00</div>
-          <button class="btn btn-add-cart add-to-cart" data-title="Leadership Training Guide" data-price="350">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-sm-6 col-md-4 col-lg-3">
-      <div class="product-card">
-        <div class="product-image">
-          <img src="img/winterco.png" alt="Community Support Bracelet" />
-        </div>
-        <div class="product-info">
-          <div class="product-title">Community Support Bracelet</div>
-          <div class="product-price">R120.00</div>
-          <button class="btn btn-add-cart add-to-cart" data-title="Community Support Bracelet" data-price="120">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-sm-6 col-md-4 col-lg-3">
-      <div class="product-card">
-        <div class="product-image">
-          <img src="img/another.jpg" alt="Mentorship Program Access" />
-        </div>
-        <div class="product-info">
-          <div class="product-title">Mentorship Program Access</div>
-          <div class="product-price">R299.00</div>
-          <button class="btn btn-add-cart add-to-cart" data-title="Mentorship Program Access" data-price="299">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-<div class="col-sm-6 col-md-4 col-lg-3">
-      <div class="product-card">
-        <div class="product-image">
-          <img src="img/winterco.png" alt="Community Support Bracelet" />
-        </div>
-        <div class="product-info">
-          <div class="product-title">Community Support Bracelet</div>
-          <div class="product-price">R120.00</div>
-          <button class="btn btn-add-cart add-to-cart" data-title="Community Support Bracelet" data-price="120">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-6 col-md-4 col-lg-3">
-      <div class="product-card">
-        <div class="product-image">
-          <img src="img/another.jpg" alt="Mentorship Program Access" />
-        </div>
-        <div class="product-info">
-          <div class="product-title">Mentorship Program Access</div>
-          <div class="product-price">R299.00</div>
-          <button class="btn btn-add-cart add-to-cart" data-title="Mentorship Program Access" data-price="299">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- Hero -->
+<section class="hero text-center">
+  <div class="overlay"></div>
 </section>
 
-<!-- Footer -->
-<footer class="footer" style="background-color:#c12329">
-  <br/><br/>
-        <div class="container">
-          <div class="row text-center text-md-start">
-            <!-- About Section -->
-            <div class="col-md-3 mb-4">
-              <h5 style="color: white;">G2 UNITE </h5>
-              <div class="decor">༶༚</div>
-              <p>G2 Unite has tiller made its offer to appeal to different age groups. A large focus of the activities is centred around Youth Development and Enhancement. We have also designed some programmes that will involve elders with our Youth.</p>
-            </div>
-    
-            <!-- Social Media -->
-            <div class="col-md-3 mb-4">
-              <h5 style="color: white;">SOCIAL MEDIA</h5>
-              <div class="decor">༶༚</div>
-              <div class="social-icons mt-3">
-                <i class="fab fa-facebook"></i>
-                <i class="fab fa-twitter"></i>
-                <i class="fab fa-instagram"></i>
-              </div>
-            </div>
-    
-            <!-- Contacts -->
-            <div class="col-md-3 mb-4">
-              <h5 style="color: white;">CONTACTS</h5>
-              <div class="decor">༶༚</div>
-            
-              <p>274 Gwiligwili Location Keiskammahoek, <br>Eastern Cape, South Africa<br>
-              Email: g2uniteevent@gmail.com<br>
-              Mobile Number: 0789027075<br>
-              WhatsApp: 0789027075</p>
-            </div>
-    
-            <!-- Working Hours -->
-            <div class="col-md-3 mb-4">
-              <h5 style="color: white;">WORKING HOURS</h5>
-              <div class="decor">༶༚</div>
-              <p><br>
-              Monday – Saturday<br>
-              08h00 – 18h00<br>
-              Sunday and Public Holidays<br>
-              08h00 – 17h00</p>
-            </div>
+<!-- Main Content -->
+<main class="container my-4">
+  <div class="row">
+    <!-- Filters -->
+    <aside class="col-lg-3 filter-panel d-none d-lg-block">
+      <div class="sticky-filters">
+        <h6 class="mb-3">Filters</h6>
+        <div class="mb-3">
+          <label class="form-label">Availability</label>
+          <div><input type="checkbox" id="instock" checked> <label for="instock">In stock only</label></div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Price</label>
+          <input type="range" min="100" max="1000" id="priceRange" class="form-range">
+          <small id="priceRangeVal">R100 - R1000</small>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Size</label>
+          <div class="d-flex gap-2 flex-wrap">
+            <button class="btn btn-outline-secondary btn-sm size-filter">XS</button>
+            <button class="btn btn-outline-secondary btn-sm size-filter">S</button>
+            <button class="btn btn-outline-secondary btn-sm size-filter">M</button>
+            <button class="btn btn-outline-secondary btn-sm size-filter">L</button>
+            <button class="btn btn-outline-secondary btn-sm size-filter">XL</button>
           </div>
         </div>
-      </footer>
-    <!-- Footer Section Begin -->
-    <footer  >
-       
-           
-        <div class="social-links-warp" style="background-color: #d3b679;">
-			
+        <div>
+          <button class="btn btn-sm btn-primary" id="applyFilters">Apply</button>
+          <button class="btn btn-sm btn-link" id="clearFilters">Clear</button>
+        </div>
+      </div>
+    </aside>
 
-<div class="container text-center pt-5" >
-                <p style="color: white;"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Designed by<a href="https://tulisa-wasa.vercel.app/"> Tulisa Wasa<i class="icon-heart color-danger" aria-hidden="true"></i> 
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-            </div>
+    <!-- Products Grid -->
+    <section class="col-lg-9 col-md-12">
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+        <div><strong>All Apparel</strong> <small class="text-muted">— 93 products</small></div>
+        <div>
+          <select id="sortBy" class="form-select form-select-sm">
+            <option value="featured">Featured</option>
+            <option value="best">Best selling</option>
+            <option value="price-asc">Price, low to high</option>
+            <option value="price-desc">Price, high to low</option>
+          </select>
+        </div>
+      </div>
+      <div class="row g-3" id="productsGrid">
+        <!-- Product cards injected by JS -->
+      </div>
+    </section>
+  </div>
+</main>
 
-<br>
-		</div>
-    </footer>
+<!-- Cart Modal -->
+<div class="modal fade" id="cartModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Your cart</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="cartItemsContainer"></div>
+        <div id="cartEmptyMessage" class="text-muted">Your cart is empty</div>
+      </div>
+      <div class="modal-footer d-flex justify-content-between align-items-center">
+        <div><small class="text-muted">We accept Apple Pay, Google Pay, Card</small></div>
+        <div>
+          <strong class="me-3">Total: <span id="cartTotal">R0.00</span></strong>
+          <button id="checkoutBtn" class="btn btn-success">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- Bootstrap JS + Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Optional animation CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<script src="https://js.stripe.com/v3/"></script>
 
 <script>
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const PRODUCTS = [
+    { id: '74', title: 'T-SHIRT', price: 50000, priceDisplay: 'R 500.00', img: './img/bean.png', colorOpts: [] },
+    { id: '75', title: 'T-SHIRT', price: 45000, priceDisplay: 'R 450.00', img: './img/cap (2).png', colorOpts: [] },
+    { id: '76', title: 'CARROT', price: 50000, priceDisplay: 'R 500.00', img: './img/hat.png', colorOpts: [] },
+    { id: '77', title: 'WINTER', price: 6000, priceDisplay: 'R 600.00', img: './img/bee.jpg', colorOpts: [] },
+  ];
 
-  const cartItemsContainer = document.getElementById('cart-items');
-  const grandTotal = document.getElementById('grand-total');
-  const miniCart = document.getElementById("mini-cart");
-  const cartBtn = document.getElementById("cart-btn");
-  const cartCount = document.getElementById("cart-count");
-  const miniCartItems = document.getElementById("mini-cart-items");
-  const miniTotal = document.getElementById("mini-total");
+  let cart = {};
 
-  let total = 0;
+  function formatR(cents){ return 'R ' + (cents/100).toFixed(2); }
 
-  // Render main cart page
-  if (cartItemsContainer && grandTotal) {
-    if (cart.length === 0) {
-      cartItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
-    } else {
-      cartItemsContainer.innerHTML = cart.map((item, index) => {
-        const itemTotal = item.qty * item.price;
-        total += itemTotal;
-        return `
-          <div class="row cart-item align-items-center">
-            <div class="col-3 col-md-2">
-              <img src="${item.image || 'https://via.placeholder.com/100'}" alt="${item.title}" class="img-fluid cart-img">
+  const productsGrid = document.getElementById('productsGrid');
+  function renderProducts(list){
+    productsGrid.innerHTML = '';
+    list.forEach(p => {
+      const col = document.createElement('div');
+      col.className = 'col-6 col-md-4 col-lg-3';
+      col.innerHTML = `
+        <div class="product-card">
+          <img src="${p.img}" alt="${p.title}" class="product-img" />
+          <div class="product-body">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <div>
+                <div style="font-weight:600">${p.title}</div>
+                <div class="choose-options">${p.colorOpts.join(' • ')}</div>
+              </div>
+              <div class="text-end">
+                <div class="price">${formatR(p.price)}</div>
+                <div class="rating">★ 4.9</div>
+              </div>
             </div>
-            <div class="col-9 col-md-4">
-              <h6 class="mb-1">${item.title}</h6>
-              <p class="mb-0 text-muted">Price: R${item.price.toFixed(2)}</p>
-            </div>
-            <div class="col-6 col-md-2 mt-2 mt-md-0">
-              <input type="number" class="form-control qty-input" min="1" value="${item.qty}" data-index="${index}">
-            </div>
-            <div class="col-6 col-md-2 text-end mt-2 mt-md-0">
-              <p class="mb-0">R${itemTotal.toFixed(2)}</p>
-            </div>
-            <div class="col-12 col-md-2 text-end mt-2 mt-md-0">
-              <button class="btn btn-sm btn-danger" onclick="removeItem(${index})">Remove</button>
+            <div class="d-flex gap-2">
+              <button class="btn btn-outline-primary btn-sm w-100 choose-btn" data-id="${p.id}" data-action="choose">Choose options</button>
+              <button class="btn btn-dark btn-sm w-100 add-cart-btn" data-id="${p.id}">Add to cart</button>
             </div>
           </div>
-        `;
-      }).join('');
-      grandTotal.textContent = `Grand Total: R${total.toFixed(2)}`;
-    }
-
-    document.querySelectorAll('.qty-input').forEach(input => {
-      input.addEventListener('change', (e) => {
-        const index = e.target.getAttribute('data-index');
-        const newQty = parseInt(e.target.value);
-        if (newQty > 0) {
-          cart[index].qty = newQty;
-          localStorage.setItem('cart', JSON.stringify(cart));
-          location.reload();
-        }
-      });
+        </div>
+      `;
+      productsGrid.appendChild(col);
     });
   }
 
-  // Remove item from cart
-  function removeItem(index) {
-    cart.splice(index, 1);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    location.reload();
+  function addToCart(productId, qty = 1, options = {}) {
+    const p = PRODUCTS.find(x => x.id === productId);
+    if(!p) return;
+    if(!cart[productId]) cart[productId] = { product: p, qty: 0, options };
+    cart[productId].qty += qty;
+    updateCartUI();
   }
 
-  // Show or hide mini cart
-  cartBtn.addEventListener("click", () => {
-    miniCart.style.display = miniCart.style.display === "none" ? "block" : "none";
-  });
-
-  document.addEventListener("click", function (e) {
-    if (!cartBtn.contains(e.target) && !miniCart.contains(e.target)) {
-      miniCart.style.display = "none";
-    }
-  });
-
-  // Add-to-cart functionality
-  document.querySelectorAll('.add-to-cart').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const title = btn.getAttribute('data-title');
-      const price = parseFloat(btn.getAttribute('data-price'));
-      const existingItem = cart.find(item => item.title === title);
-
-      if (existingItem) {
-        existingItem.qty += 1;
-      } else {
-        cart.push({ title, price, qty: 1 });
-      }
-
-      localStorage.setItem('cart', JSON.stringify(cart));
-
-      // Update mini-cart immediately
-      const newCount = cart.reduce((sum, item) => sum + item.qty, 0);
-      if (cartCount) cartCount.textContent = newCount;
-
-      let miniCartTotal = 0;
-      miniCartItems.innerHTML = cart.map(item => {
-        const itemTotal = item.qty * item.price;
-        miniCartTotal += itemTotal;
-        return `
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <div>
-              <div>${item.title}</div>
-              <small class="text-muted">Qty: ${item.qty}</small>
-            </div>
-            <div>R${itemTotal.toFixed(2)}</div>
-          </div>`;
-      }).join('');
-      miniTotal.textContent = `R${miniCartTotal.toFixed(2)}`;
-
-      // Show mini-cart with animation
-      miniCart.style.display = "block";
-      miniCart.classList.add('animate__animated', 'animate__fadeInDown');
-
-      // Hide after 3 seconds (optional)
-      setTimeout(() => {
-        miniCart.style.display = "none";
-      }, 3000);
-    });
-  });
-
-  // Initial cart count on page load
-  if (cartCount) {
-    cartCount.textContent = cart.reduce((sum, item) => sum + item.qty, 0);
+  function removeFromCart(productId){
+    delete cart[productId];
+    updateCartUI();
   }
 
-  // Render mini-cart on page load
-  if (miniCartItems && miniTotal) {
-    let miniCartTotal = 0;
-    if (cart.length === 0) {
-      miniCartItems.innerHTML = "<p>Your cart is empty.</p>";
+  function updateCartUI(){
+    const countEl = document.getElementById('cartCount');
+    const container = document.getElementById('cartItemsContainer');
+    const emptyMessage = document.getElementById('cartEmptyMessage');
+    const totalEl = document.getElementById('cartTotal');
+
+    const items = Object.values(cart);
+    const total = items.reduce((s,it)=> s + it.qty * it.product.price, 0);
+
+    countEl.innerText = items.reduce((s,it)=> s + it.qty, 0);
+    totalEl.innerText = formatR(total);
+
+    if(items.length === 0){
+      container.innerHTML = '';
+      emptyMessage.style.display = 'block';
     } else {
-      miniCartItems.innerHTML = cart.map(item => {
-        const itemTotal = item.qty * item.price;
-        miniCartTotal += itemTotal;
-        return `
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <div>
-              <div>${item.title}</div>
-              <small class="text-muted">Qty: ${item.qty}</small>
+      emptyMessage.style.display = 'none';
+      container.innerHTML = '';
+      items.forEach(it=>{
+        const r = document.createElement('div');
+        r.className = 'd-flex align-items-center gap-3 mb-3';
+        r.innerHTML = `
+          <img src="${it.product.img}" style="width:84px; height:84px; object-fit:cover; border-radius:6px;" />
+          <div class="flex-grow-1">
+            <div style="font-weight:600">${it.product.title}</div>
+            <div class="text-muted">${it.product.colorOpts.slice(0,2).join(', ')}</div>
+            <div class="mt-2">
+              <button class="btn btn-outline-secondary btn-sm me-2 qty-dec" data-id="${it.product.id}">−</button>
+              <strong>${it.qty}</strong>
+              <button class="btn btn-outline-secondary btn-sm ms-2 qty-inc" data-id="${it.product.id}">+</button>
+              <button class="btn btn-link btn-sm text-danger ms-3 remove-item" data-id="${it.product.id}">Remove</button>
             </div>
-            <div>R${itemTotal.toFixed(2)}</div>
-          </div>`;
-      }).join('');
+          </div>
+          <div><strong>${formatR(it.qty * it.product.price)}</strong></div>
+        `;
+        container.appendChild(r);
+      });
     }
-    miniTotal.textContent = `R${miniCartTotal.toFixed(2)}`;
   }
+
+  document.addEventListener('click', (e) => {
+    const addBtn = e.target.closest('.add-cart-btn');
+    if(addBtn){ addToCart(addBtn.dataset.id,1); return; }
+
+    const openCart = e.target.closest('#openCartBtn');
+    if(openCart){ new bootstrap.Modal(document.getElementById('cartModal')).show(); return; }
+
+    const dec = e.target.closest('.qty-dec');
+    if(dec){ 
+      const id = dec.dataset.id;
+      if(cart[id]){ cart[id].qty = Math.max(1, cart[id].qty-1); updateCartUI(); }
+      return;
+    }
+
+    const inc = e.target.closest('.qty-inc');
+    if(inc){ const id = inc.dataset.id; if(cart[id]){ cart[id].qty+=1; updateCartUI(); } return; }
+
+    const rem = e.target.closest('.remove-item');
+    if(rem){ removeFromCart(rem.dataset.id); return; }
+
+    const chooseBtn = e.target.closest('[data-action="choose"]');
+    if(chooseBtn){ alert('This demo shows "Choose options".'); return; }
+  });
+
+  document.getElementById('checkoutBtn').addEventListener('click', async function(){
+    const items = Object.values(cart).map(it => ({
+      id: it.product.id,
+      title: it.product.title,
+      unit_amount: it.product.price,
+      quantity: it.qty
+    }));
+    if(items.length === 0){ alert('Your cart is empty'); return; }
+    alert('Demo: Checkout flow not connected.');
+  });
+
+  document.getElementById('priceRange').addEventListener('input', (e) => {
+    document.getElementById('priceRangeVal').innerText = `R100 - R${e.target.value}`;
+  });
+
+  renderProducts(PRODUCTS);
+  updateCartUI();
 </script>
-
-
-
-
-
 
 </body>
 </html>
