@@ -196,10 +196,10 @@
 
     <!-- CART BUTTON -->
     <div class="d-flex align-items-center position-relative">
-      <button id="cart-btn" class="btn position-relative">
+      <!-- <button id="cart-btn" class="btn position-relative">
         🛒
         <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
-      </button>
+      </button> -->
 
       <!-- Mini Cart Dropdown -->
       <div id="mini-cart" class="card shadow-sm position-absolute end-0 mt-2" style="width: 320px; display: none; z-index: 1000;">
@@ -304,7 +304,7 @@
   </div>
   <div class="whatsapp-body">
     <p>Hi there 👋<br>Need help? Let's chat on WhatsApp.</p>
-    <a href="https://wa.me/0830439657?text=Hi%20G2%20Unite,%20I%20have%20a%20question." target="_blank" class="btn btn-success btn-sm w-100">Start Chat</a>
+    <a href="https://wa.me/07890270757?text=Hi%20G2%20Unite,%20I%20have%20a%20question." target="_blank" class="btn btn-success btn-sm w-100">Start Chat</a>
   </div>
 </div>
 
@@ -340,7 +340,7 @@
     const subject = document.getElementById('subject').value.trim();
     const message = document.getElementById('message').value.trim();
     const fullMessage = `Hello, my name is ${name}%0AEmail: ${email}%0ASubject: ${subject}%0AMessage: ${message}`;
-    const whatsappURL = `https://wa.me/0820439657?text=${encodeURIComponent(fullMessage)}`;
+    const whatsappURL = `https://wa.me/07890270757?text=${encodeURIComponent(fullMessage)}`;
     setTimeout(() => window.open(whatsappURL, '_blank'), 1000);
   });
 
